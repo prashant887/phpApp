@@ -4,15 +4,20 @@
 </head>
 <body>
   <h1> Welcome to my App</h1>
- <ul>
 <?php
-$json=file_get_contents('http://flaskApp/get_detials');
-$obj=json_decode($json)
-$products=$obj
-foreach($products as $product) {
- echo "<li>$product</li>";
-}
+$url='http://flask-service/get_detials';
+echo "$url";
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+    $content = curl_exec ($ch);
+    echo "$content";
+    $content = json_decode($content);
+    $res=curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close ($ch); 
+    
+echo "<h1>$content</h1>";
 ?>
-</ul>
 </body>
 </html>
